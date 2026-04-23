@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Theme variables ─────────────────────────────────────────────────────── */
+:root {
+  --c-bg:           #0d0d0f;
+  --c-bg-surface:   #111114;
+  --c-bg-elevated:  #18181d;
+  --c-bg-overlay:   #1e1e25;
+  --c-bg-code:      #0a0a0c;
+
+  --c-border:        #222229;
+  --c-border-subtle: #1a1a20;
+  --c-border-strong: #2e2e38;
+
+  --c-text:   #e8e8f0;
+  --c-text-2: #8888a0;
+  --c-text-3: #555568;
+  --c-text-4: #333345;
+  --c-text-5: #444455;
+
+  --c-accent:   #5c6cfa;
+  --c-accent-2: #7c8dfc;
+
+  --c-scrollbar:       #2e2e38;
+  --c-scrollbar-hover: #3e3e4e;
+
+  --c-success:    #34d399;
+  --c-success-bg: rgba(52, 211, 153, 0.07);
+  --c-success-bd: rgba(52, 211, 153, 0.3);
+  --c-error:      #ff4d6a;
+  --c-error-bg:   rgba(255, 77, 106, 0.06);
+  --c-error-bd:   rgba(255, 77, 106, 0.2);
+  --c-warning:    #fbbf24;
+  --c-keyword:    #f87171;
+  --c-purple:     #a78bfa;
+}
+
+[data-theme="light"] {
+  --c-bg:           #f0f0f4;
+  --c-bg-surface:   #ffffff;
+  --c-bg-elevated:  #e8e8ee;
+  --c-bg-overlay:   #dcdce6;
+  --c-bg-code:      #fafafa;
+
+  --c-border:        #c8c8d8;
+  --c-border-subtle: #dcdce8;
+  --c-border-strong: #b0b0c4;
+
+  --c-text:   #0a0a12;
+  --c-text-2: #383850;
+  --c-text-3: #6a6a84;
+  --c-text-4: #9898b0;
+  --c-text-5: #8080a0;
+
+  --c-accent:   #3b4eeb;
+  --c-accent-2: #4a5cf0;
+
+  --c-scrollbar:       #b8b8cc;
+  --c-scrollbar-hover: #9898b0;
+
+  --c-success:    #047857;
+  --c-success-bg: rgba(4, 120, 87, 0.08);
+  --c-success-bd: rgba(4, 120, 87, 0.35);
+  --c-error:      #b91c1c;
+  --c-error-bg:   rgba(185, 28, 28, 0.07);
+  --c-error-bd:   rgba(185, 28, 28, 0.3);
+  --c-warning:    #b45309;
+  --c-keyword:    #c0392b;
+  --c-purple:     #6d28d9;
+}
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+  }
+
+  body {
+    background-color: var(--c-bg);
+    color: var(--c-text);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    transition: background-color 0.15s, color 0.15s;
+  }
+
+  ::selection {
+    background: rgba(92, 108, 250, 0.25);
+    color: var(--c-text);
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--c-scrollbar); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--c-scrollbar-hover); }
+}
+
+/* ── Components ──────────────────────────────────────────────────────────── */
+@layer components {
+  .tool-textarea {
+    @apply w-full rounded-lg px-4 py-3 text-sm font-mono resize-none outline-none transition-all duration-150;
+    background: var(--c-bg-surface);
+    border: 1px solid var(--c-border);
+    color: var(--c-text);
+  }
+  .tool-textarea::placeholder { color: var(--c-text-3); }
+  .tool-textarea:focus {
+    border-color: var(--c-accent);
+    box-shadow: 0 0 0 2px rgba(92, 108, 250, 0.15);
+  }
+
+  .copy-btn {
+    @apply flex items-center gap-1.5 text-xs font-mono font-medium
+           px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer;
+    color: var(--c-text-2);
+    border: 1px solid var(--c-border);
+    background: transparent;
+  }
+  .copy-btn:hover {
+    color: var(--c-text);
+    border-color: var(--c-border-strong);
+    background: var(--c-bg-elevated);
+  }
+  .copy-btn:active { transform: scale(0.95); }
+  .copy-btn.copied {
+    color: var(--c-success);
+    border-color: var(--c-success-bd);
+    background: var(--c-success-bg);
+  }
+
+  .section-label {
+    @apply text-xs font-mono font-medium uppercase tracking-widest;
+    color: var(--c-text-3);
+  }
+
+  .tool-btn {
+    @apply px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 cursor-pointer;
+    color: var(--c-text-2);
+    border: 1px solid var(--c-border);
+    background: var(--c-bg-elevated);
+  }
+  .tool-btn:hover {
+    color: var(--c-text);
+    border-color: var(--c-border-strong);
+    background: var(--c-bg-overlay);
+  }
+  .tool-btn:active { transform: scale(0.97); }
+
+  .tool-btn-primary {
+    @apply px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 text-white cursor-pointer;
+    background: var(--c-accent);
+    border: 1px solid var(--c-accent);
+  }
+  .tool-btn-primary:hover { filter: brightness(1.1); }
+  .tool-btn-primary:active { transform: scale(0.97); }
+
+  /* Status badges */
+  .badge-success {
+    @apply text-xs font-mono px-2 py-0.5 rounded border;
+    color: var(--c-success);
+    border-color: var(--c-success-bd);
+    background: var(--c-success-bg);
+  }
+  .badge-error {
+    @apply text-xs font-mono px-2 py-0.5 rounded border;
+    color: var(--c-error);
+    border-color: var(--c-error-bd);
+    background: var(--c-error-bg);
+  }
+  .badge-warning {
+    @apply text-xs font-mono px-2 py-0.5 rounded border;
+    color: var(--c-warning);
+    border-color: rgba(251,191,36,0.3);
+    background: rgba(251,191,36,0.07);
+  }
+
+  /* Divider line used between panels */
+  .panel-divider { background: var(--c-border); }
+
+  /* Error block */
+  .error-block {
+    @apply px-3 py-2 rounded-lg border text-xs font-mono flex-shrink-0;
+    color: var(--c-error);
+    border-color: var(--c-error-bd);
+    background: var(--c-error-bg);
+  }
+
+  /* Code viewer */
+  .code-view {
+    @apply flex-1 overflow-auto rounded-lg border;
+    border-color: var(--c-border);
+    background: var(--c-bg-code);
+    min-height: 0;
+  }
+
+  /* Toggle switch */
+  .theme-toggle {
+    @apply flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer transition-all duration-150;
+    color: var(--c-text-3);
+    border: 1px solid var(--c-border);
+  }
+  .theme-toggle:hover {
+    color: var(--c-text-2);
+    border-color: var(--c-border-strong);
+    background: var(--c-bg-elevated);
+  }
+}
