@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useCopy } from '../hooks/useCopy'
 import { CopyButton } from './CopyButton'
 import { useLocalStorage } from '../hooks/useLocalStorage'
