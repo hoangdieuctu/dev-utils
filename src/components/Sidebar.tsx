@@ -1,6 +1,6 @@
-import { JsonIcon, Base64Icon, UuidIcon, HashIcon, PasswordIcon, JwtIcon, SqlIcon } from './Icons'
+import { JsonIcon, Base64Icon, UuidIcon, HashIcon, PasswordIcon, JwtIcon, SqlIcon, CertIcon, KeyIcon } from './Icons'
 
-export type ToolId = 'json' | 'base64' | 'uuid' | 'hash' | 'password' | 'jwt' | 'sql'
+export type ToolId = 'json' | 'base64' | 'uuid' | 'hash' | 'password' | 'jwt' | 'sql' | 'cert' | 'privkey'
 
 export interface Tool {
   id: ToolId
@@ -18,6 +18,8 @@ export const TOOLS: Tool[] = [
   { id: 'password', label: 'Password', description: 'Generator',         icon: PasswordIcon, shortcut: '5' },
   { id: 'jwt',      label: 'JWT',      description: 'Extractor',         icon: JwtIcon,      shortcut: '6' },
   { id: 'sql',      label: 'SQL',      description: 'Formatter',         icon: SqlIcon,      shortcut: '7' },
+  { id: 'cert',     label: 'Cert',     description: 'X.509 Decoder',     icon: CertIcon,     shortcut: '8' },
+  { id: 'privkey',  label: 'Priv Key', description: 'Key Inspector',      icon: KeyIcon,      shortcut: '9' },
 ]
 
 interface SidebarProps {
@@ -52,7 +54,7 @@ export function Sidebar({ active, onSelect, theme, onToggleTheme }: SidebarProps
               DevUtils
             </div>
             <div className="text-xs font-mono" style={{ color: 'var(--c-text-3)' }}>
-              v1.0.0
+              v1.0.1
             </div>
           </div>
         </div>

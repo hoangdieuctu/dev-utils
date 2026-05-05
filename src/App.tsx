@@ -7,6 +7,8 @@ import { HashGenerator } from './components/HashGenerator'
 import { PasswordGenerator } from './components/PasswordGenerator'
 import { JwtTool } from './components/JwtTool'
 import { SqlFormatter } from './components/SqlFormatter'
+import { CertificateTool } from './components/CertificateTool'
+import { PrivateKeyTool } from './components/PrivateKeyTool'
 import { useLocalStorage } from './hooks/useLocalStorage'
 
 function ToolPanel({ active }: { active: ToolId }) {
@@ -18,6 +20,8 @@ function ToolPanel({ active }: { active: ToolId }) {
     case 'password': return <PasswordGenerator />
     case 'jwt': return <JwtTool />
     case 'sql': return <SqlFormatter />
+    case 'cert': return <CertificateTool />
+    case 'privkey': return <PrivateKeyTool />
   }
 }
 
@@ -29,6 +33,8 @@ const TOOL_TITLES: Record<ToolId, string> = {
   password: 'Password Generator',
   jwt: 'JWT Inspector',
   sql: 'SQL Formatter',
+  cert: 'Certificate Decoder',
+  privkey: 'Private Key Inspector',
 }
 
 const TOOL_SUBTITLES: Record<ToolId, string> = {
@@ -39,6 +45,8 @@ const TOOL_SUBTITLES: Record<ToolId, string> = {
   password: 'Generate secure random passwords with configurable rules',
   jwt: 'Decode and inspect JWT tokens — header, payload, claims, and expiry',
   sql: 'Format and beautify SQL queries with dialect-aware syntax highlighting',
+  cert: 'Decode X.509 PEM certificates — subject, issuer, validity, SANs, and fingerprints',
+  privkey: 'Inspect PEM private keys — algorithm, key size, and public key fingerprint',
 }
 
 export default function App() {

@@ -109,3 +109,24 @@ export function SqlIcon({ size = 16, className = '', style }: IconProps) {
     </svg>
   )
 }
+
+export function CertIcon({ size = 16, className = '', style }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" className={className} style={style}>
+      <rect x="2" y="1.5" width="12" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.25" />
+      <path d="M5 5h6M5 8h4" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
+      <circle cx="10.5" cy="11" r="1.5" stroke="currentColor" strokeWidth="1.1" />
+      <path d="M10.5 12.5V14.5" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+export function KeyIcon({ size = 16, className = '', style }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" className={className} style={style}>
+      <circle cx="6" cy="7" r="3.5" stroke="currentColor" strokeWidth="1.25" />
+      <path d="M8.5 9.5l5 5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
+      <path d="M11 11.5l1.5 1.5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
+    </svg>
+  )
+}
