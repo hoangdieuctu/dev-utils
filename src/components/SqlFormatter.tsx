@@ -31,12 +31,25 @@ interface FormatResult {
 function runFormat(sql: string, dialect: SqlLanguage, indent: IndentSize, keywordCase: KeywordCase): FormatResult {
   if (!sql.trim()) return { ok: true, output: '', error: null }
   try {
-    const output = format(sql, {
+    // Replace :named_params with unique placeholders so sql-formatter doesn't
+    // mangle them (it drops the space before params and breaks on keywords like :end).
+    const params: string[] = []
+    const placeholder = '__PARAM_'
+    const sanitized = sql.replace(/:[a-zA-Z_][a-zA-Z0-9_]*/g, (match) => {
+      params.push(match)
+      return `${placeholder}${params.length - 1}__`
+    })
+
+    let output = format(sanitized, {
       language: dialect,
       tabWidth: indent,
       keywordCase,
       linesBetweenQueries: 2,
     })
+
+    // Restore original :named_params, preserving the keyword case of the surrounding text
+    output = output.replace(new RegExp(`${placeholder}(\\d+)__`, 'g'), (_, i) => params[Number(i)])
+
     return { ok: true, output, error: null }
   } catch (e) {
     const msg = (e as Error).message
@@ -78,13 +91,14 @@ const KEYWORDS = new Set(
   'SELECT FROM WHERE JOIN LEFT RIGHT INNER OUTER FULL CROSS ON AS AND OR NOT IN EXISTS BETWEEN LIKE IS NULL CASE WHEN THEN ELSE END INSERT INTO VALUES UPDATE SET DELETE CREATE ALTER DROP TABLE INDEX VIEW DATABASE SCHEMA WITH UNION ALL DISTINCT ORDER BY GROUP HAVING LIMIT OFFSET ASC DESC PRIMARY KEY FOREIGN REFERENCES CONSTRAINT DEFAULT UNIQUE CHECK IF BEGIN COMMIT ROLLBACK TRANSACTION OVER PARTITION RETURNING EXPLAIN ANALYZE TRUNCATE REPLACE USING'.split(' ')
 )
 
-const TOKEN_RE = /('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`[^`]*`|--[^\n]*|\/\*[\s\S]*?\*\/|\b\d+(?:\.\d+)?\b|[a-zA-Z_][a-zA-Z0-9_]*|\S)/g
+const TOKEN_RE = /('(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`[^`]*`|--[^\n]*|\/\*[\s\S]*?\*\/|\b\d+(?:\.\d+)?\b|:[a-zA-Z_][a-zA-Z0-9_]*|[a-zA-Z_][a-zA-Z0-9_]*|\S)/g
 
 interface Span { text: string; color: string }
 
 function tokenColor(token: string): string {
   if (token.startsWith('--') || token.startsWith('/*')) return 'var(--c-text-5)'
   if (token.startsWith("'") || token.startsWith('"') || token.startsWith('`')) return 'var(--c-success)'
+  if (token.startsWith(':')) return 'var(--c-warning)'
   if (/^\d/.test(token)) return 'var(--c-warning)'
   if (KEYWORDS.has(token.toUpperCase())) return 'var(--c-keyword)'
   if (/^[(),;.*=<>!+\-/%&|^~]/.test(token)) return 'var(--c-text-2)'

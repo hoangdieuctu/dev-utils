@@ -54,7 +54,7 @@ export function Sidebar({ active, onSelect, theme, onToggleTheme }: SidebarProps
               DevUtils
             </div>
             <div className="text-xs font-mono" style={{ color: 'var(--c-text-3)' }}>
-              v1.0.1
+              v1.0.2
             </div>
           </div>
         </div>
