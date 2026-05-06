@@ -32,7 +32,7 @@ interface SidebarProps {
 export function Sidebar({ active, onSelect, theme, onToggleTheme }: SidebarProps) {
   return (
     <aside
-      className="flex flex-col h-full select-none"
+      className="flex flex-col h-full min-h-0 select-none"
       style={{
         width: '200px',
         flexShrink: 0,
@@ -54,7 +54,7 @@ export function Sidebar({ active, onSelect, theme, onToggleTheme }: SidebarProps
               DevUtils
             </div>
             <div className="text-xs font-mono" style={{ color: 'var(--c-text-3)' }}>
-              v1.0.2
+              v1.0.3
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@ export function Sidebar({ active, onSelect, theme, onToggleTheme }: SidebarProps
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-2 py-3">
+      <nav className="flex-1 px-2 py-3 overflow-y-auto">
         <div className="mb-2 px-3">
           <span className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--c-text-4)' }}>
             Tools
@@ -135,16 +135,6 @@ export function Sidebar({ active, onSelect, theme, onToggleTheme }: SidebarProps
         </ul>
       </nav>
 
-      {/* Privacy notice */}
-      <div className="px-4 py-3 border-t" style={{ borderColor: 'var(--c-border-subtle)' }}>
-        <div className="flex items-center gap-1.5">
-          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" style={{ color: 'var(--c-text-4)', flexShrink: 0 }}>
-            <rect x="3" y="7" width="10" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.25" />
-            <path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
-          </svg>
-          <span className="text-xs font-mono" style={{ color: 'var(--c-text-4)' }}>All data stays on your device</span>
-        </div>
-      </div>
     </aside>
   )
 }
